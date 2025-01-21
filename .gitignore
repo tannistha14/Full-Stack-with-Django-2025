@@ -1,0 +1,4 @@
+venv
+restaurant/mosaic/static
+restaurant/db.sqlite3
+
