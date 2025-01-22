@@ -1,42 +1,118 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="dashboard-container">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>MANAGE</h2>
-    <a href="{% url 'menu' %}" class="{% if request.path == '/menu/' %}active{% endif %}">Menu</a>
-    <a href="{% url 'order' %}" class="{% if request.path == '/order/' %}active{% endif %}">Orders</a>
-    <a href="{% url 'reservation' %}" class="{% if request.path == '/reservation/' %}active{% endif %}">Reservations</a>
-  </div>
+<style>
+  .reservation-table-container {
+    padding: 40px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 90%;
+  }
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <h1>Manage Reservations</h1>
-    <div class="reservation-table">
-      <table>
-        <tr>
-          <th>Reservation ID</th>
-          <th>Status</th>
-          <th>Table</th>
-          <th>Actions</th>
-        </tr>
-        {% for reservation in reservations %}
-        <tr>
-          <td>{{ reservation.id }}</td>
-          <td>{{ reservation.status }}</td>
-          <td>{{ reservation.table.name }}</td>
-          <td>
-            <a href="{% url 'approve_reservation' reservation.id %}" class="approve-btn">Approve</a>
-            <a href="{% url 'reject_reservation' reservation.id %}" class="reject-btn">Reject</a>
-          </td>
-        </tr>
-        {% empty %}
-        <tr>
-          <td colspan="4">No reservations available.</td>
-        </tr>
-        {% endfor %}
-      </table>
-    </div>
-  </div>
+  .reservation-table-container h2 {
+    text-align: center;
+    color: #2e9b67;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .reservation-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+
+  .reservation-table th, .reservation-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .reservation-table th {
+    background-color: #2e9b67;
+    color: white;
+    text-transform: uppercase;
+  }
+
+  .reservation-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .reservation-table .actions {
+    text-align: center;
+  }
+
+  .approve-btn, .reject-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .approve-btn {
+    background-color: #2e9b67;
+    color: white;
+  }
+
+  .approve-btn:hover {
+    background-color: #267b53;
+  }
+
+  .reject-btn {
+    background-color: #a52323;
+    color: white;
+  }
+
+  .reject-btn:hover {
+    background-color: #811919;
+  }
+</style>
+
+<div class="reservation-table-container">
+  <h2>Manage Reservations</h2>
+  <table class="reservation-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Date & Time</th>
+        <th>Guests</th>
+        <th>Table No.</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.id }}</td>
+        <td>{{ reservation.name }}</td>
+        <td>{{ reservation.phone_number }}</td>
+        <td>{{ reservation.reservation_date }}</td>
+        <td>{{ reservation.num_guests }}</td>
+        <td>
+            {% if reservation.table %}
+            {{ reservation.table.table_number }}
+          {% else %}
+            Not Assigned
+          {% endif %}
+        </td>
+        <td>{{ reservation.status }}</td>
+        <td class="actions">
+          <a href="{% url 'approve_reservation' reservation.id %}" class="approve-btn">Approve</a>
+          <a href="{% url 'reject_reservation' reservation.id %}" class="reject-btn">Reject</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8">No reservations available.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
+
 {% endblock content %}
+

@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import MenuItem, Order, Reservation, Table, OrderItem
-from .forms import MenuItemForm, ReservationForm 
+from django.contrib import messages
 from django.db.models import Sum
+from .models import MenuItem, Order, Reservation, Table, OrderItem
+from .forms import ReservationForm
 
 def home(request):
     """Render the home page."""
@@ -27,39 +28,25 @@ def order(request):
     orders = Order.objects.all()
     return render(request, 'mosaic/order.html', {'orders': orders})
 
-def reservation(request):
-    """Handle new reservations."""
-    if request.method == 'POST':
-        form = ReservationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('reservation')
-    else:
-        form = ReservationForm()
-    
-    reservations = Reservation.objects.all()
-    return render(request, 'mosaic/reservation.html', {'form': form, 'reservations': reservations})
-
 def dashboard(request, section=None):
     """Render the admin dashboard with summary data."""
     total_orders = Order.objects.count()
     total_reservations = Reservation.objects.count()
     total_income = OrderItem.objects.aggregate(total=Sum('menu_item__price'))['total'] or 0
     tables = Table.objects.all()
-    
-    # Add logic for different sections
+
     if section == "menu":
         items = MenuItem.objects.all()
         return render(request, 'mosaic/manage_menu.html', {'items': items})
-    
+
     elif section == "order":
         orders = Order.objects.all()
         return render(request, 'mosaic/manage_order.html', {'orders': orders})
-    
+
     elif section == "reservation":
-        reservations = Reservation.objects.all()
-        return render(request, 'mosaic/manage_reservation.html', {'reservations': reservations, 'tables': tables})
-    
+        reservations = Reservation.objects.select_related('table').all()
+        return render(request, 'mosaic/manage_reservation.html', {'reservations': reservations})
+
     context = {
         'total_orders': total_orders,
         'total_reservations': total_reservations,
@@ -68,10 +55,25 @@ def dashboard(request, section=None):
     }
     return render(request, 'mosaic/dashboard.html', context)
 
+
 def menu_view(request, category):
     """Dynamic view for menu categories."""
-    items = MenuItem.objects.filter(category=category.capitalize())
-    return render(request, 'mosaic/menu_category.html', {'category': category, 'items': items})
+    category_display_names = {
+        'appetizers': 'Appetizer',
+        'main_course': 'MainCourse',
+        'desserts': 'Dessert',
+        'drinks': 'Drink'
+    }
+
+    # Get the correct category name or return an empty list if the category is invalid
+    category_name = category_display_names.get(category.lower())
+    items = MenuItem.objects.filter(category=category_name) if category_name else []
+
+    return render(request, 'mosaic/menu_category.html', {
+        'category': category.replace('_', ' ').title(),
+        'items': items
+    })
+
 
 def edit_menu_item(request, model, id):
     """Generic edit view for menu items."""
@@ -126,3 +128,29 @@ def reject_reservation(request, id):
     reservation.status = 'Rejected'
     reservation.save()
     return redirect('reservation')
+
+def reservation(request):
+    """Handle new reservations."""
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            table = form.cleaned_data.get('table')
+            # Update table status to reserved
+            if table:
+                table.status = 'Reserved'
+                table.save()
+            reservation.save()
+            messages.success(request, f"Reservation created for Table {table.table_number}!")
+            return redirect('reservation')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = ReservationForm()
+
+    reservations = Reservation.objects.order_by('-reservation_date')
+    return render(request, 'mosaic/reservation.html', {'form': form, 'reservations': reservations})
+
+
+    # Other sections of the dashboard
+

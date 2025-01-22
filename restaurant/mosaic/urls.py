@@ -11,4 +11,5 @@ urlpatterns = [
     path('menu/<str:category>/', menu_view, name='menu_category'),
     path('reservation/approve/<int:id>/', approve_reservation, name='approve_reservation'),
     path('reservation/reject/<int:id>/', reject_reservation, name='reject_reservation'),
+    
 ]
