@@ -1,0 +1,29 @@
+{% extends 'mosaic/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-success">{{ category|title }}</h2>
+    
+    <div class="row mt-4">
+        {% for item in items %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <p class="text-success font-weight-bold">${{ item.price }}</p>
+                    <a href="#" class="btn btn-outline-dark">Order Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No items available in this category.</p>
+        {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4">
+        <a href="{% url 'menu' %}" class="btn btn-secondary">Back to Menu</a>
+    </div>
+</div>
+{% endblock %}

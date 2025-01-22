@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Page Background */
+  .reservation-container {
+    background-color: #8fc09d;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Reservation Form */
+  .reservation-box {
+    background-color: #e2e2dc;
+    padding: 50px 60px;
+    border-radius: 20px;
+    text-align: center;
+    width: 450px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .reservation-box h2 {
+    color: #2e9b67;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+  }
+
+  .reservation-box label {
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    text-align: left;
+  }
+
+  .reservation-box input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: none;
+  }
+
+  .reservation-box .date-time {
+    display: flex;
+    gap: 15px;
+  }
+
+  .reservation-box .date-time input {
+    width: 100%;
+  }
+
+  .reservation-box .guests-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .reservation-box button {
+    background-color: #2e9b67;
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    font-weight: bold;
+    border-radius: 25px;
+    margin-top: 30px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .reservation-box button:hover {
+    background-color: #267b53;
+  }
+
+</style>
+
+<div class="reservation-container">
+  <div class="reservation-box">
+    <h2>RESERVATION</h2>
+    <form method="POST">
+      {% csrf_token %}
+
+      <label for="name">NAME</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="phone">PHONE NO.</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <div class="date-time">
+        <div>
+          <label for="date">DATE</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <div>
+          <label for="time">TIME</label>
+          <input type="time" id="time" name="time" required>
+        </div>
+      </div>
+
+      <div class="guests-input">
+        <label for="guests">NO. OF GUESTS</label>
+        <input type="number" id="guests" name="guests" min="1" required style="width: 50px;">
+      </div>
+
+      <button type="submit">CONFIRM</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

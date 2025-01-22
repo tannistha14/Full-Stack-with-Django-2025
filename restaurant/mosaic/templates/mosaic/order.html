@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Your Order</h2>
+<form method="POST">
+    {% csrf_token %}
+    {% for item in menu_items %}
+        <label>{{ item.name }} - {{ item.price }}</label>
+        <input type="number" name="order[{{ item.id }}]" min="0">
+    {% endfor %}
+    <button type="submit">Submit Order</button>
+</form>
+{% endblock content %}

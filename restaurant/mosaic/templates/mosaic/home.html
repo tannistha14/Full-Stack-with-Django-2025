@@ -1,7 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{% block content %}
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Mosaic Table</title>
@@ -10,43 +14,6 @@
             margin: 0;
             font-family: 'Arial', sans-serif;
         }
-
-        /* Header Styling */
-        .header {
-            background-color: #2C8E5F;
-            color: white;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header .logo {
-            font-family: 'Times New Roman', serif;
-            font-size: 2.5rem;
-            font-style: italic;
-        }
-
-        .header .logo span {
-            color: #B0DFBE;
-        }
-
-        .header .nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .header .nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: opacity 0.3s;
-        }
-
-        .header .nav a:hover {
-            opacity: 0.7;
-        }
-
         /* Main Content */
         .main {
             display: flex;
@@ -108,24 +75,12 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            The Mosaic <span>Table</span>
-        </div>
-        <nav class="nav">
-            <a href="#menu">Menu</a>
-            <a href="#order">Order</a>
-            <a href="#reservation">Reservation</a>
-            <a href="#dashboard">Dashboard</a>
-        </nav>
-    </header>
 
     <!-- Main Content -->
     <div class="main">
         <!-- Content Section -->
         <div class="content">
-            <img src="https://via.placeholder.com/1920x1080" alt="Restaurant">
+            <img src="{% static 'restaurant.jpg' %}">
             <div class="overlay">Piecing together flavours from around the world</div>
         </div>
 

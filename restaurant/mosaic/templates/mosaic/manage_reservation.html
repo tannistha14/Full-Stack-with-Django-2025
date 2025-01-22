@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>MANAGE</h2>
+    <a href="{% url 'menu' %}" class="{% if request.path == '/menu/' %}active{% endif %}">Menu</a>
+    <a href="{% url 'order' %}" class="{% if request.path == '/order/' %}active{% endif %}">Orders</a>
+    <a href="{% url 'reservation' %}" class="{% if request.path == '/reservation/' %}active{% endif %}">Reservations</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>Manage Reservations</h1>
+    <div class="reservation-table">
+      <table>
+        <tr>
+          <th>Reservation ID</th>
+          <th>Status</th>
+          <th>Table</th>
+          <th>Actions</th>
+        </tr>
+        {% for reservation in reservations %}
+        <tr>
+          <td>{{ reservation.id }}</td>
+          <td>{{ reservation.status }}</td>
+          <td>{{ reservation.table.name }}</td>
+          <td>
+            <a href="{% url 'approve_reservation' reservation.id %}" class="approve-btn">Approve</a>
+            <a href="{% url 'reject_reservation' reservation.id %}" class="reject-btn">Reject</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No reservations available.</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

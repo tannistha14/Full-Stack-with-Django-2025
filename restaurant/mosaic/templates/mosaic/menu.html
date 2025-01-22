@@ -1,5 +1,141 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-This is My Menu.(edited)
+<style>
+  /* Main container styling */
+  .menu-container {
+    display: flex;
+    padding: 40px 20px;
+    gap: 30px;
+  }
+
+  /* Sidebar (Mosaic Specials) */
+  .sidebar {
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .sidebar h3 {
+    color: #2e9b67;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .special-item img {
+    width: 150px;
+    border-radius: 50%;
+  }
+
+  .special-item h5 {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .special-item a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  /* Menu Content */
+  .menu-content {
+    width: 75%;
+  }
+
+  .menu-content h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .menu-categories {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .menu-categories a {
+    margin: 0 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  .menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+  }
+
+  .menu-item {
+    text-align: center;
+    width: 220px;
+  }
+
+  .menu-item img {
+    width: 180px;
+    border-radius: 50%;
+  }
+
+  .menu-item h5 {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .menu-item a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+  }
+</style>
+
+<div class="menu-container">
+  
+  <!-- Main Content (Menu) -->
+  <div class="menu-content">
+    <h2>OUR MENU</h2>
+    
+    <!-- Categories -->
+    <div class="menu-categories">
+      <a href="{% url 'menu_category' 'appetizers' %}">Appetizers</a>
+      <a href="{% url 'menu_category' 'main_course' %}">Main Course</a>
+      <a href="{% url 'menu_category' 'desserts' %}">Desserts</a>
+      <a href="{% url 'menu_category' 'drinks' %}">Drinks</a>
+    </div>
+
+    <!-- Menu Grid -->
+    <div class="menu-items">
+      {% for item in items %}
+      <div class="menu-item">
+        <img src="{{ item.image.url }}" alt="{{ item.name }}">
+        <h5>{{ item.name }}</h5>
+        <a href="#">Details</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Sidebar (Mosaic Specials) -->
+  <div class="sidebar">
+    <h3>MOSAIC Specials</h3>
+    <div class="special-item">
+      <img src="{% static 'images/special.jpg' %}" alt="Special">
+      <h5>Special 1</h5>
+      <a href="#">Details</a>
+    </div>
+    <div class="special-item mt-4">
+      <img src="{% static 'images/special.jpg' %}" alt="Special">
+      <h5>Special 2</h5>
+      <a href="#">Details</a>
+    </div>
+  </div>
+
+</div>
 {% endblock content %}

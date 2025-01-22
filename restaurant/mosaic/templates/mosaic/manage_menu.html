@@ -1,0 +1,15 @@
+<h2>Manage Appetizers</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add New Appetizer</button>
+</form>
+
+<ul>
+    {% for appetizer in appetizers %}
+        <li>{{ appetizer.name }} - ${{ appetizer.price }}
+            <a href="{% url 'delete_appetizer' appetizer.id %}">Delete</a>
+            <a href="{% url 'edit_appetizer' appetizer.id %}">Edit</a>
+        </li>
+    {% endfor %}
+</ul>

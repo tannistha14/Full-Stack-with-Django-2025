@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  /* Page Layout */
+  .dashboard-container {
+    display: flex;
+    height: 100vh;
+    background-color: #8fc09d;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background-color: #e2e2dc;
+    padding: 40px 20px;
+  }
+
+  .sidebar h2 {
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+    font-weight: bold;
+  }
+
+  .sidebar a {
+    display: block;
+    color: black;
+    font-size: 1.3rem;
+    text-decoration: none;
+    margin-bottom: 20px;
+  }
+
+  .sidebar a.active {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 60px;
+    text-align: center;
+  }
+
+  .main-content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+
+  /* Table */
+  .reservation-table, .order-table, .menu-table {
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .reservation-table table, .order-table table, .menu-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2rem;
+  }
+
+  .reservation-table th, .order-table th, .menu-table th, 
+  .reservation-table td, .order-table td, .menu-table td {
+    padding: 15px 20px;
+    text-align: left;
+  }
+
+  .reservation-table th, .order-table th, .menu-table th {
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+  }
+
+  /* Buttons */
+  .approve-btn, .reject-btn, .edit-btn, .delete-btn {
+    background-color: #2e9b67;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  .approve-btn:hover, .reject-btn:hover, .edit-btn:hover, .delete-btn:hover {
+    background-color: #267b53;
+  }
+
+  .reject-btn {
+    background-color: #a52323;
+  }
+
+  .edit-btn {
+    background-color: #3498db;
+  }
+
+  .delete-btn {
+    background-color: #f39c12;
+  }
+
+  /* Save Button */
+  .save-btn {
+    margin-top: 30px;
+    padding: 15px 50px;
+    border: 2px solid black;
+    border-radius: 25px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    background-color: white;
+  }
+
+  .save-btn:hover {
+    background-color: #ddd;
+  }
+
+</style>
+
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>MANAGE</h2>
+    <a href="{% url 'manage_dashboard' section='menu' %}" class="{% if section == 'menu' %}active{% endif %}">Manage Menu</a>
+    <a href="{% url 'manage_dashboard' section='order' %}" class="{% if section == 'order' %}active{% endif %}">Manage Orders</a>
+    <a href="{% url 'manage_dashboard' section='reservation' %}" class="{% if section == 'reservation' %}active{% endif %}">Manage Reservations</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>ADMIN DASHBOARD</h1>
+
+    {% if section == 'menu' %}
+    <!-- Menu Management -->
+    <div class="menu-table">
+      <h2>Manage Menu</h2>
+      <table>
+        <tr>
+          <th>Item Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+        {% for item in menu_items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <a href="{% url 'edit_menu_item' 'appetizer' item.id %}" class="edit-btn">Edit</a>
+            <a href="{% url 'delete_menu_item' 'appetizer' item.id %}" class="delete-btn">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No menu items available.</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    {% elif section == 'order' %}
+    <!-- Order Management -->
+    <div class="order-table">
+      <h2>Manage Orders</h2>
+      <table>
+        <tr>
+          <th>Order ID</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+          <td>{{ order.id }}</td>
+          <td>{{ order.status }}</td>
+          <td>
+            <a href="{% url 'edit_order' order.id %}" class="edit-btn">Edit</a>
+            <a href="{% url 'delete_order' order.id %}" class="delete-btn">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">No orders available.</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    {% elif section == 'reservation' %}
+    <!-- Reservation Management -->
+    <div class="reservation-table">
+      <h2>Manage Reservations</h2>
+      <table>
+        <tr>
+          <th>Reservation ID</th>
+          <th>Status</th>
+          <th>Table</th>  <!-- Display Table -->
+          <th>Actions</th>
+        </tr>
+        {% for reservation in reservations %}
+        <tr>
+          <td>{{ reservation.id }}</td>
+          <td>{{ reservation.status }}</td>
+          <td>{{ reservation.table.name }}</td> <!-- Show Table Name -->
+          <td>
+            <a href="{% url 'approve_reservation' reservation.id %}" class="approve-btn">Approve</a>
+            <a href="{% url 'reject_reservation' reservation.id %}" class="reject-btn">Reject</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="4">No reservations available.</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    {% endif %}
+
+    <button class="save-btn">SAVE CHANGES</button>
+  </div>
+</div>
+
+{% endblock content %}
