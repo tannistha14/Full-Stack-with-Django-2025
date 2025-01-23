@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="order-confirmation-container" style="max-width: 900px; margin: 50px auto; padding: 30px; border-radius: 10px; background-color: #f8f9fa;">
+    <h2>Order Confirmation</h2>
+
+    <h3>Order Summary</h3>
+    <ul>
+      {% for item in order.items.all %}
+        <li>{{ item.menu_item.name }} (x{{ item.quantity }}) - Rs {{ item.total_price }}</li>
+      {% endfor %}
+    </ul>
+
+    <h4>Total Price: Rs {{ total_price }}</h4>
+
+    <p>Your order has been successfully placed!</p>
+
+    <a href="{% url 'home' %}" class="btn btn-success">Go Back to Home</a>
+  </div>
+{% endblock %}

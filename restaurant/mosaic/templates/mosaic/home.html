@@ -72,6 +72,37 @@
         .main .sidebar .special a:hover {
             text-decoration: underline;
         }
+        .sidebar {
+    width: 25%;
+    background-color: #fff;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar h3 {
+    color: #2e9b67;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+
+  .special-item img {
+    width: 150px;
+    border-radius: 50%;
+  }
+
+  .special-item h5 {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  .special-item a {
+    color: #2e9b67;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
     </style>
 </head>
 <body>
@@ -81,21 +112,26 @@
         <!-- Content Section -->
         <div class="content">
             <img src="{% static 'restaurant.jpg' %}">
-            <div class="overlay">Piecing together flavours from around the world</div>
+            <div class="overlay">Piecing together flavours from around the world!</div>
         </div>
 
         <!-- Sidebar -->
-        <aside class="sidebar">
-            <h2>Mosaic Specials</h2>
-            <div class="special">
-                <img src="https://via.placeholder.com/60" alt="Special 1">
-                <a href="#">Details</a>
-            </div>
-            <div class="special">
-                <img src="https://via.placeholder.com/60" alt="Special 2">
-                <a href="#">Details</a>
-            </div>
-        </aside>
+          <!-- Sidebar (Mosaic Specials) -->
+  <div class="sidebar">
+    <h3>MOSAIC Specials</h3>
+    <div class="special-item">
+      <img src="{% static 'alfredo.jpg' %}" alt="Special">
+      <h5>Alfredo Pasta</h5>
+      <a href="#">Details</a>
+    </div>
+    <div class="special-item mt-4">
+      <img src="{% static 'classic cheeseburger.jpg' %}" alt="Special">
+      <h5>Classic Cheese Burger</h5>
+      <a href="#">Details</a>
+    </div>
+  </div>
+</div>
+
     </div>
 </body>
 {% endblock content %}

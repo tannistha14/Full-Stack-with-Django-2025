@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Container styling */
+    .manage-orders-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    /* Header styling */
+    .manage-orders-container h2 {
+      text-align: center;
+      color: #2e9b67;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+  
+    /* Table styling */
+    .manage-orders-container table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+  
+    .manage-orders-container th, .manage-orders-container td {
+      text-align: left;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+    }
+  
+    .manage-orders-container th {
+      background-color: #2e9b67;
+      color: white;
+      font-weight: bold;
+    }
+  
+    .manage-orders-container tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  
+    .manage-orders-container tr:hover {
+      background-color: #e8f5e9;
+    }
+  
+    /* Action buttons */
+    .manage-orders-container .actions {
+      display: flex;
+      gap: 10px;
+    }
+  
+    .manage-orders-container a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+  
+    .manage-orders-container .edit {
+      background-color: #2e9b67;
+    }
+  
+    .manage-orders-container .edit:hover {
+      background-color: #267b53;
+    }
+  
+    .manage-orders-container .delete {
+      background-color: #d9534f;
+    }
+  
+    .manage-orders-container .delete:hover {
+      background-color: #c9302c;
+    }
+  </style>
+  
+  <div class="manage-orders-container">
+    <h2>Manage Orders</h2>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer Name</th>
+          <th>Total Price</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in Order %}
+          <tr>
+            <td>{{ Order.id }}</td>
+            <td>{{ Order.customer_name }}</td>
+            <td>Rs{{ Order.total_price }}</td>
+            <td>{{ Order.status }}</td>
+            <td>
+              <div class="actions">
+                <a href="{% url 'edit_order' order.id %}" class="edit">Edit</a>
+                <a href="{% url 'delete_order' order.id %}" class="delete">Delete</a>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+  {% endblock content %}

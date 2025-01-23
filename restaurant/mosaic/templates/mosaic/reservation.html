@@ -3,70 +3,74 @@
 
 {% block content %}
 <style>
-  /* Page Background */
-  .reservation-container {
-    background-color: #8fc09d;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* Reservation Form */
-  .reservation-box {
-    background-color: #e2e2dc;
-    padding: 50px 60px;
-    border-radius: 20px;
-    text-align: center;
-    width: 450px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .reservation-box h2 {
-    color: #2e9b67;
-    font-weight: bold;
-    margin-bottom: 30px;
-    font-size: 1.8rem;
-  }
-
-  .reservation-box label {
-    font-weight: bold;
-    display: block;
-    margin-top: 15px;
-    text-align: left;
-  }
-
-  .reservation-box input, .reservation-box select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border-radius: 10px;
-    border: none;
-  }
-
-  .reservation-box button {
-    background-color: #2e9b67;
-    color: white;
-    border: none;
-    padding: 12px 40px;
-    font-weight: bold;
-    border-radius: 25px;
-    margin-top: 30px;
-    cursor: pointer;
-    width: 100%;
-  }
-
-  .reservation-box button:hover {
-    background-color: #267b53;
-  }
-
-  @media (max-width: 768px) {
-    .reservation-box {
-      width: 90%;
-      padding: 30px;
+    /* Page Background */
+    .reservation-container {
+      background-color: #8fc09d;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 50px; /* Add padding at the top */
+      box-sizing: border-box; /* Ensure padding is included in height calculation */
     }
-  }
-</style>
+  
+    /* Reservation Form */
+    .reservation-box {
+      background-color: #e2e2dc;
+      padding: 50px 60px;
+      border-radius: 20px;
+      text-align: center;
+      width: 450px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+  
+    .reservation-box h2 {
+      color: #2e9b67;
+      font-weight: bold;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+    }
+  
+    .reservation-box label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      text-align: left;
+    }
+  
+    .reservation-box input,
+    .reservation-box select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 10px;
+      border: none;
+    }
+  
+    .reservation-box button {
+      background-color: #2e9b67;
+      color: white;
+      border: none;
+      padding: 12px 40px;
+      font-weight: bold;
+      border-radius: 25px;
+      margin-top: 30px;
+      cursor: pointer;
+      width: 100%;
+    }
+  
+    .reservation-box button:hover {
+      background-color: #267b53;
+    }
+  
+    @media (max-width: 768px) {
+      .reservation-box {
+        width: 90%;
+        padding: 40px;
+      }
+    }
+  </style>
+  
 
 <div class="reservation-container">
   <div class="reservation-box">

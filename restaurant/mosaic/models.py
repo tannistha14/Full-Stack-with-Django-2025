@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.timezone import now
+from decimal import Decimal
 
-# Centralized MenuItem Model
-class MenuItem(models.Model):
+class menuitem(models.Model):
     CATEGORY_CHOICES = [
         ('Appetizer', 'Appetizer'),
         ('MainCourse', 'Main Course'),
@@ -11,46 +11,37 @@ class MenuItem(models.Model):
     ]
 
     name = models.CharField(max_length=255, null=False)
-    description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
-    image = models.ImageField(upload_to='menu/', null=True, blank=True)
+    image = models.CharField(max_length=255, blank=True, null=True)  # Store image path as string
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES, null=False)
     is_special = models.BooleanField(default=False)
+    description = models.TextField(blank=True, null=True)  # Add description field
 
     def __str__(self):
         return self.name
 
-# Order Model
 class Order(models.Model):
-    PENDING = "Pending"
-    COMPLETE = "Complete"
-    CANCELLED = "Cancelled"  # Added a CANCELLED status
     STATUS_CHOICES = [
-        (PENDING, "Pending"),
-        (COMPLETE, "Complete"),
-        (CANCELLED, "Cancelled"),
+        ('Pending', 'Pending'),
+        ('Completed', 'Completed'),
+        ('Cancelled', 'Cancelled'),
     ]
-
-    order_date = models.DateTimeField(auto_now_add=True)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, null=False)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=PENDING)
-    customer_name = models.CharField(max_length=255, blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)  # Added optional order notes
+    customer_name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"Order {self.id} - {self.status}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    quantity = models.IntegerField(null=False)
+    menu_item = models.ForeignKey(menuitem, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    def __str__(self):
-        return f"{self.quantity} x {self.menu_item.name}"
 
-    @property
-    def item_total(self):  # Added a property to calculate the total for this item
-        return self.menu_item.price * self.quantity
 
 # Reservation Model
 class Reservation(models.Model):
@@ -88,6 +79,7 @@ class Reservation(models.Model):
                 raise ValueError(f"Table {self.table.table_number} is already reserved at this time.")
         super().save(*args, **kwargs)
 
+
 # Table and TableData Models
 class Table(models.Model):
     AVAILABLE = "Available"
@@ -106,9 +98,21 @@ class Table(models.Model):
     def __str__(self):
         return f"Table {self.table_number} (Capacity: {self.capacity})"
 
+
 class TableData(models.Model):
     reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
     table = models.ForeignKey(Table, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Reservation {self.reservation.id} - Table {self.table.table_number}"
+
+class Cart(models.Model):
+    menu_item = models.ForeignKey(menuitem, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    @property
+    def total_price(self):
+        return self.menu_item.price * self.quantity
+
+    def __str__(self):
+        return f"{self.menu_item.name} ({self.quantity})"
+

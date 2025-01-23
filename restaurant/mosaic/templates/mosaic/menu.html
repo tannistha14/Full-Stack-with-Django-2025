@@ -8,15 +8,18 @@
     display: flex;
     padding: 40px 20px;
     gap: 30px;
+    background-color: #f8f8f8;
+    font-family: Arial, sans-serif;
   }
 
   /* Sidebar (Mosaic Specials) */
   .sidebar {
     width: 25%;
-    background-color: #f4f4f4;
+    background-color: #fff;
     padding: 30px;
     text-align: center;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
   .sidebar h3 {
@@ -36,7 +39,7 @@
   }
 
   .special-item a {
-    color: #333;
+    color: #2e9b67;
     font-weight: bold;
     text-decoration: none;
   }
@@ -50,6 +53,7 @@
     text-align: center;
     font-weight: bold;
     margin-bottom: 30px;
+    color: #444;
   }
 
   .menu-categories {
@@ -61,38 +65,43 @@
     margin: 0 10px;
     font-weight: bold;
     text-decoration: none;
-    color: #333;
-    border: 1px solid #333;
+    color: #2e9b67;
+    border: 2px solid #2e9b67;
     padding: 10px 20px;
     border-radius: 5px;
+    transition: all 0.3s ease;
   }
 
-  .menu-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
+  .menu-categories a:hover, .menu-categories a.active {
+    background-color: #2e9b67;
+    color: #fff;
   }
 
-  .menu-item {
+  /* Description Section Styling */
+  .menu-description {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 220px;
+    margin-bottom: 30px;
   }
 
-  .menu-item img {
-    width: 180px;
-    border-radius: 50%;
-  }
-
-  .menu-item h5 {
-    margin-top: 15px;
+  .menu-description h3 {
+    color: #2e9b67;
     font-weight: bold;
   }
 
-  .menu-item a {
-    color: #333;
+  .menu-description p {
+    color: #555;
+    line-height: 1.6;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+  .menu-description .highlight {
+    color: #2e9b67;
     font-weight: bold;
-    text-decoration: none;
   }
 </style>
 
@@ -104,21 +113,15 @@
     
     <!-- Categories -->
     <div class="menu-categories">
-      <a href="{% url 'menu_category' 'appetizers' %}">Appetizers</a>
-      <a href="{% url 'menu_category' 'main_course' %}">Main Course</a>
-      <a href="{% url 'menu_category' 'desserts' %}">Desserts</a>
-      <a href="{% url 'menu_category' 'drinks' %}">Drinks</a>
+      <a href="{% url 'menu_category' 'menu' %}">View Menu</a>
     </div>
 
-    <!-- Menu Grid -->
-    <div class="menu-items">
-      {% for item in items %}
-      <div class="menu-item">
-        <img src="{{ item.image.url }}" alt="{{ item.name }}">
-        <h5>{{ item.name }}</h5>
-        <a href="#">Details</a>
-      </div>
-      {% endfor %}
+    <!-- Menu Description Section -->
+    <div class="menu-description">
+      <h3>Explore a World of Flavors</h3>
+      <p>At Mosaic Table, we believe food is more than just sustenance—it’s an experience. Our <span class="highlight">diverse menu</span> features a wide range of carefully crafted dishes, from the finest appetizers to decadent desserts and refreshing beverages.</p>
+      <p>Whether you're in the mood for a savory <span class="highlight">Grilled Steak</span> or looking to indulge in a sweet treat like our signature <span class="highlight">Chocolate Lava Cake</span>, we have something for every palate.</p>
+      <p>Our chefs select only the freshest ingredients to ensure each dish is bursting with flavor. Every bite is designed to take you on a culinary journey—so come, savor the experience with us!</p>
     </div>
   </div>
 
@@ -126,16 +129,16 @@
   <div class="sidebar">
     <h3>MOSAIC Specials</h3>
     <div class="special-item">
-      <img src="{% static 'images/special.jpg' %}" alt="Special">
-      <h5>Special 1</h5>
+      <img src="{% static 'alfredo.jpg' %}" alt="Special">
+      <h5>Alfredo Pasta</h5>
       <a href="#">Details</a>
     </div>
     <div class="special-item mt-4">
-      <img src="{% static 'images/special.jpg' %}" alt="Special">
-      <h5>Special 2</h5>
+      <img src="{% static 'classic cheeseburger.jpg' %}" alt="Special">
+      <h5>Classic Cheese Burger</h5>
       <a href="#">Details</a>
     </div>
   </div>
-
 </div>
+
 {% endblock content %}

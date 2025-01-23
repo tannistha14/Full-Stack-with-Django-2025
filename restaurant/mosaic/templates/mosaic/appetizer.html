@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row mt-4">
+    <!-- Appetizers -->
+    <h3 class="col-12 text-center text-success">Appetizers</h3>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <img src="{% static 'bruschetta A.jpg' %}" class="card-img-top" alt="Bruschetta">
+            <div class="card-body text-center">
+                <h5 class="card-title">Bruschetta</h5>
+                <p class="card-text">Toasted bread with fresh tomatoes, basil, and garlic.</p>
+                <p class="text-success font-weight-bold">Rs 389</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

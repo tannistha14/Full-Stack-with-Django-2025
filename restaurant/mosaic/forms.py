@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.timezone import now
-from .models import Reservation, Table
+from .models import Reservation, Table, menuitem
 
 class ReservationForm(forms.ModelForm):
     table = forms.ModelChoiceField(
@@ -40,3 +40,10 @@ class ReservationForm(forms.ModelForm):
                     f"Table {table.table_number} is already reserved at this time."
                 )
         return cleaned_data
+    # restaurant/mosaic/forms.py
+
+class MenuItemForm(forms.ModelForm):
+    class Meta:
+        model = menuitem
+        fields = ['name', 'description', 'price', 'category', 'image']
+

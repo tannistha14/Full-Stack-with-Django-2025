@@ -13,6 +13,18 @@
                 <h5 class="card-title">Bruschetta</h5>
                 <p class="card-text">Toasted bread with fresh tomatoes, basil, and garlic.</p>
                 <p class="text-success font-weight-bold">Rs 389</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=1 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Bruschetta">
+                    <input type="hidden" name="item_price" value="389">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-bruschetta')">-</button>
+                        <input type="number" id="quantity-bruschetta" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-bruschetta')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
@@ -22,130 +34,354 @@
             <img src="{% static 'Spaghetti a.jpg' %}" class="card-img-top" alt="Spaghetti">
             <div class="card-body text-center">
                 <h5 class="card-title">Spaghetti</h5>
-                <p class="card-text"> Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
                 <p class="text-success font-weight-bold">Rs 349</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=2 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Spaghetti">
+                    <input type="hidden" name="item_price" value="349">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-spaghetti')">-</button>
+                        <input type="number" id="quantity-spaghetti" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-spaghetti')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'french fry a.jpg' %}" class="card-img-top" alt="French Fry">
+            <img src="{% static 'french fry a.jpg' %}" class="card-img-top" alt="french fry">
             <div class="card-body text-center">
                 <h5 class="card-title">French Fry</h5>
-                <p class="card-text"> Crispy golden potato sticks, perfectly salted.</p>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
                 <p class="text-success font-weight-bold">Rs 219</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=3 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="french fry">
+                    <input type="hidden" name="item_price" value="219">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-french fry')">-</button>
+                        <input type="number" id="quantity-french fry" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-french fry')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
-
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'hummus a.jpg' %}" class="card-img-top" alt="Hummus">
+            <img src="{% static 'hummus a.jpg' %}" class="card-img-top" alt="Spaghetti">
             <div class="card-body text-center">
-                <h5 class="card-title">Hummuss</h5>
-                <p class="card-text"> Creamy chickpea dip with tahini and olive oil.</p>
+                <h5 class="card-title">Hummus</h5>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
                 <p class="text-success font-weight-bold">Rs 604</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=4 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Hummus">
+                    <input type="hidden" name="item_price" value="604">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-Hummus')">-</button>
+                        <input type="number" id="quantity-Hummus" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-Hummus')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Main Courses -->
-    <h3 class="col-12 text-center text-success mt-5">Main Courses</h3>
+
+</div>
+<div class="row mt-4">
+    <!-- Main Course -->
+    <h3 class="col-12 text-center text-success">Main Course</h3>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'images/pasta.jpg' %}" class="card-img-top" alt="Pasta">
-            <div class="card-body text-center">
-                <h5 class="card-title">Creamy Alfredo Pasta</h5>
-                <p class="card-text">Rich Alfredo sauce with fettuccine and parmesan.</p>
-                <p class="text-success font-weight-bold">$12.99</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3 mb-4">
-        <div class="card shadow-sm">
-            <img src="{% static 'images/grilled_chicken.jpg' %}" class="card-img-top" alt="Grilled Chicken">
+            <img src="{% static 'Grilled chicken.jpg' %}" class="card-img-top" alt="grilled chicken">
             <div class="card-body text-center">
                 <h5 class="card-title">Grilled Chicken</h5>
-                <p class="card-text">Juicy grilled chicken served with vegetables.</p>
-                <p class="text-success font-weight-bold">$15.99</p>
+                <p class="card-text">Toasted bread with fresh tomatoes, basil, and garlic.</p>
+                <p class="text-success font-weight-bold">Rs 389</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=6 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="grilled chicken">
+                    <input type="hidden" name="item_price" value="1599">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-grilled chicken')">-</button>
+                        <input type="number" id="quantity-grilled chicken" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-grilled chicken')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'images/burger.jpg' %}" class="card-img-top" alt="Burger">
+            <img src="{% static 'oyster mushroom.jpg' %}" class="card-img-top" alt="mushroom">
             <div class="card-body text-center">
-                <h5 class="card-title">Classic Cheeseburger</h5>
-                <p class="card-text">Beef patty, melted cheese, and fresh lettuce.</p>
-                <p class="text-success font-weight-bold">$10.99</p>
+                <h5 class="card-title">Oyster Mushroom</h5>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 1899</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=9 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="mushroom">
+                    <input type="hidden" name="item_price" value="1899">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-mushroom')">-</button>
+                        <input type="number" id="quantity-mushroom" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-mushroom')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'images/steak.jpg' %}" class="card-img-top" alt="Steak">
+            <img src="{% static 'thai curry.jpg' %}" class="card-img-top" alt="thai curry">
+            <div class="card-body text-center">
+                <h5 class="card-title">Thai Curry</h5>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 1899</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=10 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="thai curry">
+                    <input type="hidden" name="item_price" value="1899">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-thai curry')">-</button>
+                        <input type="number" id="quantity-thai curry" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-thai curry')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <img src="{% static 'grilled steak.jpeg' %}" class="card-img-top" alt="Steak">
             <div class="card-body text-center">
                 <h5 class="card-title">Grilled Steak</h5>
-                <p class="card-text">Perfectly cooked steak with a side of mashed potatoes.</p>
-                <p class="text-success font-weight-bold">$18.99</p>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 1899</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=8 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Steak">
+                    <input type="hidden" name="item_price" value="1899">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-Steak')">-</button>
+                        <input type="number" id="quantity-Steak" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-Steak')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
 
+
+</div>
+<div class="row mt-4">
     <!-- Beverages -->
-    <h3 class="col-12 text-center text-success mt-5">Beverages</h3>
+    <h3 class="col-12 text-center text-success">Beverages</h3>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <img src="{% static 'lemonade.jpg' %}" class="card-img-top" alt="lemonade">
+            <div class="card-body text-center">
+                <h5 class="card-title">Lemonade</h5>
+                <p class="card-text">Toasted bread with fresh tomatoes, basil, and garlic.</p>
+                <p class="text-success font-weight-bold">Rs 129</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=12 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="lemonade">
+                    <input type="hidden" name="item_price" value="129">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-lemonade')">-</button>
+                        <input type="number" id="quantity-lemonade" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-lemonade')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <img src="{% static 'cold coffee.jpg' %}" class="card-img-top" alt="cold coffee">
+            <div class="card-body text-center">
+                <h5 class="card-title">Cold Coffee</h5>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 129</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=13 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Cold Coffee">
+                    <input type="hidden" name="item_price" value="129">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-Cold Coffee')">-</button>
+                        <input type="number" id="quantity-Cold Coffee" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-Cold Coffee')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
             <img src="{% static 'cappuccino b.jpeg' %}" class="card-img-top" alt="cappuccino">
             <div class="card-body text-center">
                 <h5 class="card-title">Cappuccino</h5>
-                <p class="card-text">Freshly brewed coffee with creamy milk foam.</p>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
                 <p class="text-success font-weight-bold">Rs 149</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=11 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="cappuccino">
+                    <input type="hidden" name="item_price" value="149">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-cappuccino')">-</button>
+                        <input type="number" id="quantity-cappuccino" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-cappuccino')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
-
-    <div class="col-md-3 mb-4">
-        <div class="card shadow-sm">
-            <img src="{% static 'lemonade.jpg' %}" class="card-img-top" alt="Lemonade">
-            <div class="card-body text-center">
-                <h5 class="card-title">Fresh Lemonade</h5>
-                <p class="card-text">Refreshing lemonade made with fresh lemons.</p>
-                <p class="text-success font-weight-bold">Rs 129</p>
-            </div>
-        </div>
-    </div>
-
+    
+</div>
+<div class="row mt-4">
     <!-- Desserts -->
-    <h3 class="col-12 text-center text-success mt-5">Desserts</h3>
+    <h3 class="col-12 text-center text-success">Desserts</h3>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'choco lava.jpg' %}" class="card-img-top" alt="Chocolate Cake">
+            <img src="{% static 'apple pie.jpg' %}" class="card-img-top" alt="Apple Pie">
+            <div class="card-body text-center">
+                <h5 class="card-title">Apple Pie</h5>
+                <p class="card-text">Toasted bread with fresh tomatoes, basil, and garlic.</p>
+                <p class="text-success font-weight-bold">Rs 699</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=16 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Apple Pie">
+                    <input type="hidden" name="item_price" value="699">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-Apple Pie')">-</button>
+                        <input type="number" id="quantity-Apple Pie" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-Apple Pie')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <img src="{% static 'choco lava.jpg' %}" class="card-img-top" alt="Chocolate Lava Cake">
             <div class="card-body text-center">
                 <h5 class="card-title">Chocolate Lava Cake</h5>
-                <p class="card-text">Rich chocolate cake with a molten center.</p>
-                <p class="text-success font-weight-bold">$7.99</p>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 799</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=14 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Chocolate Lava Cake">
+                    <input type="hidden" name="item_price" value="799">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-Chocolate Lava Cake')">-</button>
+                        <input type="number" id="quantity-Chocolate Lava Cake" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-Chocolate Lava Cake')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
 
     <div class="col-md-3 mb-4">
         <div class="card shadow-sm">
-            <img src="{% static 'strawberry cheesecake.jpg' %}" class="card-img-top" alt="Cheesecake">
+            <img src="{% static 'tiramisu.jpg' %}" class="card-img-top" alt="tiramisu">
             <div class="card-body text-center">
-                <h5 class="card-title">Strawberry Cheesecake</h5>
-                <p class="card-text">Creamy cheesecake with a strawberry topping.</p>
-                <p class="text-success font-weight-bold">$6.99</p>
+                <h5 class="card-title">Tiramisu</h5>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 699</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=17 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="tiramisu">
+                    <input type="hidden" name="item_price" value="699">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-tiramisu')">-</button>
+                        <input type="number" id="quantity-tiramisu" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-tiramisu')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
             </div>
         </div>
     </div>
+    <div class="col-md-3 mb-4">
+        <div class="card shadow-sm">
+            <img src="{% static 'strawberry cheesecake.jpg' %}" class="card-img-top" alt="Strawberry Cheesecake">
+            <div class="card-body text-center">
+                <h5 class="card-title">Strawberry Cheesecake</h5>
+                <p class="card-text">Al dente pasta with rich tomato sauce and herbs.</p>
+                <p class="text-success font-weight-bold">Rs 699</p>
+                <!-- Add to Cart Section -->
+                <form method="POST" action="{% url 'add_to_cart' item_id=15 %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_name" value="Strawberry Cheesecake">
+                    <input type="hidden" name="item_price" value="699">
+                    <div class="quantity-container">
+                        <button type="button" class="btn btn-light" onclick="decrement('quantity-Strawberry Cheesecake')">-</button>
+                        <input type="number" id="quantity-Strawberry Cheesecake" name="quantity" value="0" min="0" class="quantity-box">
+                        <button type="button" class="btn btn-light" onclick="increment('quantity-Strawberry Cheesecake')">+</button>
+                    </div>
+                    <button type="submit" class="btn btn-success mt-2">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
-{% endblock %}
+<script>
+  // Function to handle quantity increase
+  function increment(id) {
+    let quantity = document.getElementById(id);
+    quantity.value = parseInt(quantity.value) + 1;
+  }
+
+  // Function to handle quantity decrease
+  function decrement(id) {
+    let quantity = document.getElementById(id);
+    if (quantity.value > 1) {
+      quantity.value = parseInt(quantity.value) - 1;
+    }
+  }
+</script>
+
+{% endblock content %}

@@ -1,13 +1,189 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Your Order</h2>
-<form method="POST">
-    {% csrf_token %}
-    {% for item in menu_items %}
-        <label>{{ item.name }} - {{ item.price }}</label>
-        <input type="number" name="order[{{ item.id }}]" min="0">
-    {% endfor %}
-    <button type="submit">Submit Order</button>
-</form>
+<style>
+  .order-container {
+      max-width: 900px;
+      margin: 50px auto;
+      background-color: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+
+  .order-container h2 {
+      text-align: center;
+      color: #2e9b67;
+      font-weight: bold;
+  }
+
+  .menu-list {
+      margin-top: 20px;
+  }
+
+  .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: #ffffff;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  .menu-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+  }
+
+  .menu-details {
+      flex: 1;
+      margin-left: 20px;
+  }
+
+  .menu-details h5 {
+      margin: 0;
+      font-size: 1.2rem;
+  }
+
+  .menu-details p {
+      margin: 5px 0;
+      font-size: 0.9rem;
+      color: #666;
+  }
+
+  .add-to-cart-btn {
+      background-color: #2e9b67;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s ease;
+  }
+
+  .add-to-cart-btn:hover {
+      background-color: #267b53;
+  }
+
+  .summary-section {
+      margin-top: 30px;
+      padding: 20px;
+      background: #e2e2dc;
+      border-radius: 10px;
+  }
+
+  .summary-section h3 {
+      color: #2e9b67;
+      font-weight: bold;
+  }
+
+  .summary-items {
+      list-style: none;
+      padding: 0;
+  }
+
+  .summary-items li {
+      padding: 10px 0;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .checkout-btn {
+      background-color: #2e9b67;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 100%;
+  }
+
+  .checkout-btn:hover {
+      background-color: #267b53;
+  }
+
+</style>
+
+<div class="order-container">
+    <h2>Place Your Order</h2>
+
+    <div class="menu-list">
+        {% for item in menu_items %}
+        <div class="menu-item">
+            <img src="{% static item.image %}" alt="{{ item.name }}">
+            <div class="menu-details">
+                <h5>{{ item.name }}</h5>
+                <p>{{ item.description }}</p>
+                <p><strong>Rs {{ item.price }}</strong></p>
+            </div>
+            <form method="POST" action="{% url 'add_to_cart' item.id %}">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="1" min="1" style="width: 50px;">
+                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="summary-section">
+        <h3>Order Summary</h3>
+        
+        <ul id="order-list">
+            {% for cart_item in cart_items %}
+            <li>{{ cart_item.menu_item.name }} (x{{ cart_item.quantity }}) - Rs {{ cart_item.total_price }}</li>
+            {% empty %}
+            <li>No items in cart.</li>
+            {% endfor %}
+        </ul>
+        <h4>Total: Rs <span id="total-price">{{ total_price }}</span></h4>
+        
+        <hr>
+        <form id="order-form" method="post" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <button type="submit" class="checkout-btn">Place Order</button>
+        </form>
+        
+        <p id="order-message" style="display:none; color: green; text-align: center;">Your order was placed successfully!</p>
+        
+        <!-- <script>
+            document.getElementById('order-form').onsubmit = function(event) {
+                event.preventDefault();
+        
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('order-message').style.display = 'block';
+        
+                        // Clear the cart items and update order summary
+                        const orderList = document.getElementById('order-list');
+                        orderList.innerHTML = '';  // Remove existing cart items
+                        
+                        data.orders.forEach(order => {
+                            const listItem = document.createElement('li');
+                            listItem.innerText = `${order.name} (x${order.quantity}) - Rs ${order.total_price}`;
+                            orderList.appendChild(listItem);
+                        });
+        
+                        document.getElementById('total-price').innerText = data.total_price;
+                    } else {
+                        alert('Order placement failed. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Something went wrong. Please try again later.');
+                });
+            };
+        </script> -->
+        
 {% endblock content %}
